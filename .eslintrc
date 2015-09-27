@@ -1,0 +1,10 @@
+rules:
+  comma-dangle: [2]
+  no-else-return: [2]
+  semi: [2, 'always']
+  semi-spacing: [2]
+  comma-spacing: [2]
+  quotes: [2, 'single']
+  curly: [2, 'all']
+  brace-style: [2, '1tbs', { allowSingleLine: false }]
+  space-after-keywords: [2, 'always']
