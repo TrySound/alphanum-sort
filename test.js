@@ -7,6 +7,11 @@ var tests = [{
 	fixture: ['5', '10', '5', '00', '01', '05', '0', '8', '1'],
 	expected: ['00', '0', '01', '1', '05', '5', '5', '8', '10']
 }, {
+  message: 'should reverse-sort numbers',
+	fixture: ['5', '10', '5', '00', '01', '05', '0', '8', '1'],
+	expected: ['10', '8', '5', '5', '05', '1', '01', '0', '00'],
+  options: { reverse: true }
+}, {
 	message: 'should sort negative numbers',
 	fixture: ['10', '-1', '-000033', '0', '5', '-033', '-0', '32', '03', '-20', '3', '00', '-00', '003', '-33', '33'],
 	expected: ['-33', '-033', '-000033', '-20', '-1', '-0', '-00', '00', '0', '003', '03', '3', '5', '10', '32', '33'],
@@ -15,6 +20,11 @@ var tests = [{
 	message: 'should sort letters',
 	fixture: ['b', 'v', 'd', 'c', 'a'],
 	expected: ['a', 'b', 'c', 'd', 'v']
+}, {
+  message: 'should reverse-sort letters',
+  fixture: ['b', 'v', 'd', 'c', 'a'],
+  expected: ['v', 'd', 'c', 'b', 'a'],
+  options: { reverse: true }
 }, {
 	message: 'should sort mixed data',
 	fixture: ['z', '5', '-5', 'k', '10', 'f', '00', 'z00', '10f', 'z10'],
@@ -132,10 +142,30 @@ var tests = [{
 	fixture: ['5D', '1A', '2D', '33A', '5E', '33K', '33D', '5S', '2C', '5C', '5F', '1D', '2M'],
 	expected: ['1A', '1D', '2C', '2D', '2M', '5C', '5D', '5E', '5F', '5S', '33A', '33D', '33K']
 }, {
-	message: 'should comapre signs only before digits',
+	message: 'should compare signs only before digits',
 	fixture: ['+item', '-item', '+34', '-43'],
 	expected: ['-43', '+34', '+item', '-item'],
 	options: { sign: true }
+}, {
+  message: 'should sort a collection',
+  fixture: [{ key: 'b' }, { key: 'c' }, { key: 'a' }],
+  expected: [{ key: 'a' }, { key: 'b' }, { key: 'c' }],
+  options: { sortBy: 'key' }
+}, {
+  message: 'should reverse-sort a collection',
+  fixture: [{ key: 'b' }, { key: 'c' }, { key: 'a' }],
+  expected: [{ key: 'c' }, { key: 'b' }, { key: 'a' }],
+  options: { sortBy: 'key', reverse: true }
+}, {
+  message: 'should sort a collection with secondary sorting key',
+  fixture: [{ key: 'b', value: 'boat' }, { key: 'b', value: 'banana' }, { key: 'c', value: 'cat' }, { key: 'c', value: 'cabbage' }, { key: 'a', value: 'apple' }],
+  expected: [{ key: 'a', value: 'apple' }, { key: 'b', value: 'banana' }, { key: 'b', value: 'boat' }, { key: 'c', value: 'cabbage' }, { key: 'c', value: 'cat' }],
+  options: { sortBy: 'key', sortBySecondary: 'value' }
+}, {
+  message: 'should reverse-sort a collection with secondary sorting key',
+  fixture: [{ key: 'b', value: 'boat' }, { key: 'b', value: 'banana' }, { key: 'c', value: 'cat' }, { key: 'c', value: 'cabbage' }, { key: 'a', value: 'apple' }],
+  expected: [{ key: 'c', value: 'cat' }, { key: 'c', value: 'cabbage' }, { key: 'b', value: 'boat' }, { key: 'b', value: 'banana' }, { key: 'a', value: 'apple' }],
+  options: { sortBy: 'key', sortBySecondary: 'value', reverse: true }
 }];
 
 tape('alphanum-sort', function (t) {
