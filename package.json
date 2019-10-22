@@ -7,7 +7,7 @@
     "lib"
   ],
   "devDependencies": {
-    "eslint": "^1.5.1",
+    "eslint": "^6.5.1",
     "javascript-natural-sort": "^0.7.1",
     "tap-spec": "^4.1.0",
     "tape": "^4.2.0"
