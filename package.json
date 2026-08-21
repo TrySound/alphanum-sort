@@ -8,6 +8,7 @@
   ],
   "devDependencies": {
     "eslint": "^1.5.1",
+    "is-my-json-valid": "2.20.5",
     "javascript-natural-sort": "^0.7.1",
     "tap-spec": "^4.1.0",
     "tape": "^4.2.0"
