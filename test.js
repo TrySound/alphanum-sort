@@ -1,4 +1,4 @@
-var tape = require('tape');
+var assert = require('assert');
 var alphanum = require('./lib');
 var natcompare = require('javascript-natural-sort');
 
@@ -138,34 +138,33 @@ var tests = [{
 	options: { sign: true }
 }];
 
-tape('alphanum-sort', function (t) {
-	t.plan(tests.length);
-	tests.forEach(function (test) {
-		t.deepEqual(alphanum(test.fixture, test.options), test.expected, test.message);
-	});
-
-	var time, i;
-
-	time = process.hrtime();
-	for (i = 0; i < 1000; i += 1) {
-		tests.forEach(function (test) {
-			natcompare.insensitive = test.options && test.options.insensitive;
-			test.fixture.sort(natcompare);
-		});
-	}
-	var natCompleted = process.hrtime(time);
-
-	time = process.hrtime();
-	for (i = 0; i < 1000; i += 1) {
-		tests.forEach(function (test) {
-			alphanum(test.fixture, test.options);
-		});
-	}
-	var anCompleted = process.hrtime(time);
-
-	console.log.apply(null, [
-		'benchmark\n- alphanum-sort: %dms\n- natural-sort: %dms',
-		Math.round((1000 * anCompleted[0] + anCompleted[1] / 1000000) * 100) / 100,
-		Math.round((1000 * natCompleted[0] + natCompleted[1] / 1000000) * 100) / 100
-	]);
+tests.forEach(function (test) {
+	assert.deepEqual(alphanum(test.fixture, test.options), test.expected, test.message);
 });
+
+console.log('%d tests passed', tests.length);
+
+var time, i;
+
+time = process.hrtime();
+for (i = 0; i < 1000; i += 1) {
+	tests.forEach(function (test) {
+		natcompare.insensitive = test.options && test.options.insensitive;
+		test.fixture.sort(natcompare);
+	});
+}
+var natCompleted = process.hrtime(time);
+
+time = process.hrtime();
+for (i = 0; i < 1000; i += 1) {
+	tests.forEach(function (test) {
+		alphanum(test.fixture, test.options);
+	});
+}
+var anCompleted = process.hrtime(time);
+
+console.log.apply(null, [
+	'benchmark\n- alphanum-sort: %dms\n- natural-sort: %dms',
+	Math.round((1000 * anCompleted[0] + anCompleted[1] / 1000000) * 100) / 100,
+	Math.round((1000 * natCompleted[0] + natCompleted[1] / 1000000) * 100) / 100
+]);
