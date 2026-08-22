@@ -1,6 +1,6 @@
 {
   "name": "alphanum-sort",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Alphanumeric sorting algorithm",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
