@@ -1,0 +1,31 @@
+name: Release
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          registry-url: https://registry.npmjs.org
+      - name: Update npm
+        run: npm install --global npm@11
+      - name: Install dependencies
+        run: npm install
+      - name: Test
+        run: npm test
+      - name: Verify release tag
+        run: |
+          node -e "const version = require('./package.json').version; const expected = 'v' + version; if (process.env.GITHUB_REF_NAME !== expected) throw new Error('Release tag must be ' + expected)"
+      - name: Publish to npm
+        run: npm publish --access public
